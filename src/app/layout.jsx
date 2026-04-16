@@ -1,7 +1,7 @@
-
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
 
 export const metadata = {
   title: "EduPlattform - Apprenez à votre rythme",
@@ -13,11 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="fr"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main className="grow">
           {children}
         </main>
         <Footer />
