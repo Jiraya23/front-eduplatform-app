@@ -1,26 +1,17 @@
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+// app/layout.jsx
+// Layout global Next.js 13+ App Router
 
+import "./globals.css";
 
 export const metadata = {
-  title: "EduPlattform - Apprenez à votre rythme",
-  description: "La plateforme d'apprentissage camerounaise. Des formations en ligne sur la programmation, design, marketing et bien d'autres domaines.",
-  keywords: "e-learning, formations, Cameroun, programmation, design, marketing",
+  title: "EduPlattform — Apprends à ton rythme",
+  description: "Plateforme e-learning accessible, pratique et certifiante.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="fr"
-    >
-      <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="grow">
-          {children}
-        </main>
-        <Footer />
-      </body>
+    <html lang="fr">
+      <body>{children}</body>
     </html>
   );
 }
