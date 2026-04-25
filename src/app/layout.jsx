@@ -1,25 +1,15 @@
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-
+import './globals.css';
 
 export const metadata = {
-  title: "EduPlattform - Apprenez à votre rythme",
-  description: "La plateforme d'apprentissage camerounaise. Des formations en ligne sur la programmation, design, marketing et bien d'autres domaines.",
-  keywords: "e-learning, formations, Cameroun, programmation, design, marketing",
+  title: 'EduPlattform',
+  description: 'La plateforme d\'apprentissage panafricaine qui connecte vos ambitions aux meilleures opportunités d\'apprentissage et de mentorat.',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <body className="min-h-screen flex flex-col">
-        <header>
-           <Navbar />
-        </header>
-        <main className="grow">
-          {children}
-        </main>
-        <Footer />
+      <body>
+        {children}
       </body>
     </html>
   );

@@ -1,115 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  
-  /* EduPlattform Colors */
-  --color-primary: #22C55E;
-  --color-accent-red: #EF4444;
-  --color-accent-yellow: #EAB308;
-  --color-neutral-light: #F8FAFC;
-  --color-neutral-dark: #1F2937;
+/* ── Tokens du Design System ─────────────────────── */
+@theme {
+  /* Couleurs */
+  --color-primary: #006e2f;
+  --color-primary-container: #22c55e;
+  --color-secondary: #785a00;
+  --color-tertiary: #b91a24;
+  --color-surface: #f8f9ff;
+  --color-on-surface: #121c2a;
+  --color-surface-container: #f0f3f8;
+  --color-surface-container-low: #f4f7fb;
+  --color-surface-container-high: #e8ecf2;
+  --color-surface-container-highest: #e0e4eb;
+  --color-surface-container-lowest: #ffffff;
+
+  /* Fonts */
+  --font-headline: 'Inter', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  /* Font sizes */
+  --font-size-display-lg: 3.5rem;
+  --font-size-headline-md: 1.75rem;
+  --font-size-title-lg: 1.375rem;
+  --font-size-body-md: 0.875rem;
+  --font-size-label-sm: 0.6875rem;
+
+  /* Shadows */
+  --shadow-premium: 0 20px 50px -12px rgba(18, 28, 42, 0.06);
+  --shadow-hover: 0 30px 60px -12px rgba(34, 197, 94, 0.15);
+
+  --background-image-gradient-primary: linear-gradient(135deg, #006e2f, #22c55e);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+/*   * {
+    @apply rounded-sm;
+  } */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-on-surface overflow-x-hidden;
+    font-family: var(--font-body);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Custom Animations */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@layer components {
+  /* African geometric pattern */
+  .pattern-african {
+    @apply bg-transparent opacity-5;
+    background-image: radial-gradient(circle, rgba(18, 28, 42, 1) 0.5px, transparent 0.5px);
+    background-size: 24px 24px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  /* Glassmorphism effect */
+  .glass-header {
+    background-color: rgba(255, 255, 255, 0.7);
+    @apply backdrop-blur-2xl;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.3);
   }
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+  /* Gradient primaire */
+  .gradient-primary {
+    background: linear-gradient(135deg, #006e2f, #22c55e);
   }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-slide-in-up {
-  animation: slideInUp 0.5s ease-out;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* Prose Styles */
-.prose {
-  max-width: none;
-}
-
-.prose h2 {
-  @apply text-2xl font-bold mt-6 mb-4 text-gray-900;
-}
-
-.prose h3 {
-  @apply text-xl font-bold mt-4 mb-2 text-gray-800;
-}
-
-.prose ul,
-.prose ol {
-  @apply my-4 pl-6;
-}
-
-.prose li {
-  @apply my-2 text-gray-700;
-}
-
-.prose code {
-  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
-}
-
-.prose pre {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
-}
-
-.prose a {
-  @apply text-green-600 hover:text-green-700;
-}
-
-/* Scrollbar Styles */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
