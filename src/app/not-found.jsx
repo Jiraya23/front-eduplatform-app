@@ -2,8 +2,8 @@
 // 📄 app/not-found.jsx
 // ════════════════════════════════════════
 import Link from "next/link";
-import { Navbar } from "@/components/layout/Navbar";
-import NotFoundContent from "@/components/common/NotFoundContent";
+import { Navbar } from "../components/layout/Navbar";
+import NotFoundContent from "../components/common/NotFoundContent";
 
 export const metadata = {
   title: "404 – Classroom Not Found | EduPlattform",
