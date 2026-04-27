@@ -1,5 +1,5 @@
 // Courses pour la homepage
-export const mockCatalogCourses = [
+export const mockHomepageCourses = [
   {
     id: 1,
     title: 'Architecture Web & Cloud (Fullstack)',
@@ -8,6 +8,8 @@ export const mockCatalogCourses = [
     duration: '60 Heures',
     level: 'Avancé',
     price: '85,000',
+    badge: 'PREMIUM',
+    description: 'Maîtrisez la conception de systèmes fullstack modernes et le déploiement cloud à grande échelle.',
     badges: [
       { label: 'Populaire', variant: 'primary' },
       { label: 'Dev', variant: 'secondary' }
@@ -21,6 +23,8 @@ export const mockCatalogCourses = [
     duration: '45 Heures',
     level: 'Intermédiaire',
     price: '120,000',
+    badge: 'PREMIUM',
+    description: 'Plongez dans la data science et l\'intelligence artificielle appliquées aux marchés africains.',
     badges: [
       { label: 'Nouveau', variant: 'blue' },
       { label: 'Data', variant: 'secondary' }
@@ -33,7 +37,9 @@ export const mockCatalogCourses = [
     rating: 5.0,
     duration: '30 Heures',
     level: 'Débutant',
-    price: '65,000',
+    price: 'FREE',
+    badge: 'FREE',
+    description: 'Apprenez à concevoir des interfaces modernes et des expériences utilisateur percutantes.',
     badges: [
       { label: 'Best Seller', variant: 'purple' },
       { label: 'UX/UI', variant: 'secondary' }
