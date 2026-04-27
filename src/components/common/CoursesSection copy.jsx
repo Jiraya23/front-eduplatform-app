@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { CatalogCourseCard } from '@/components/formation/CatalogCourseCard';
-import { mockHomepageCourses } from '@/lib/mockData';
+import { CourseCard } from '@/components/formation/CourseCard';
+import { mockCourses } from '@/lib/mockData';
 
 export function CoursesSection() {
   const containerVariants = {
@@ -47,9 +47,9 @@ export function CoursesSection() {
           viewport={{ once: false, amount: 0.2 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          {mockHomepageCourses.map((course) => (
+          {mockCourses.map((course) => (
             <motion.div key={course.id} variants={itemVariants}>
-              <CatalogCourseCard course={course} />
+              <CourseCard course={course} />
             </motion.div>
           ))}
         </motion.div>
