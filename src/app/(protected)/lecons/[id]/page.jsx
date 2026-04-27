@@ -10,7 +10,6 @@ import LessonSidebar     from '@/components/lecon/LessonSidebar';
 import { SpinnerPage }   from '@/components/ui/Spinner';
 import { ErrorBlock }    from '@/components/ui/ErrorBlock';
 import { useLecon }      from '@/hooks/useLecon';
-import { useToast }      from '@/components/ui/Toast';
 
 // ── Normalise la leçon API → props des composants ───────────
 function normalizeLecon(l) {
@@ -18,7 +17,6 @@ function normalizeLecon(l) {
     id:       l.id,
     title:    l.titre       ?? l.title    ?? 'Leçon',
     module:   l.module?.titre ?? l.module?.title ?? l.module_titre ?? 'Module',
-    progress: l.progression  ?? l.progress ?? 0,
     videoUrl: l.video_url    ?? l.videoUrl ?? null,
     content:  l.contenu      ?? l.content  ?? '',
     overview: l.description  ?? '',
@@ -41,18 +39,8 @@ function normalizeLecon(l) {
 }
 
 export default function LessonPage({ params }) {
-  const { id }                              = use(params);
-  const { lecon, loading, error, markComplete, completing } = useLecon(id);
-  const toast                               = useToast();
-
-  const handleMarkComplete = async () => {
-    try {
-      await markComplete();
-      toast.success('Leçon marquée comme terminée !');
-    } catch {
-      toast.error('Impossible de marquer la leçon comme terminée.');
-    }
-  };
+  const { id } = use(params);
+  const { lecon, loading, error } = useLecon(id);
 
   if (loading) return <SpinnerPage />;
   if (error)   return <ErrorBlock message={error} />;
@@ -67,7 +55,7 @@ export default function LessonPage({ params }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Header avec progress */}
+      {/* Header */}
       <LessonHero lesson={lesson} />
 
       {/* Layout principal */}
@@ -87,9 +75,6 @@ export default function LessonPage({ params }) {
             nextId={lesson.nextId}
             quizId={lesson.quizId}
             leconId={lesson.id}
-            onMarkComplete={handleMarkComplete}
-            completing={completing}
-            completed={lecon.completed ?? false}
           />
 
           <LessonContent lesson={lesson} />

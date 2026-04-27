@@ -64,7 +64,9 @@ export default function LessonSidebar({ lesson }) {
           {lesson.resources?.map((resource, idx) => (
             <motion.a
               key={idx}
-              href="#"
+              href={resource.url || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-white transition-colors group cursor-pointer"
               whileHover={{ x: 4 }}
               variants={itemVariants}
@@ -72,9 +74,9 @@ export default function LessonSidebar({ lesson }) {
               <div className="flex items-center gap-3">
                 <FileText size={18} className="text-[#006e2f]" />
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold text-on-surface">{resource.title}</span>
+                  <span className="text-sm font-bold text-on-surface">{resource.title || resource.nom}</span>
                   <span className="text-[0.7rem] text-on-surface/50">
-                    {resource.size} • {resource.type?.toUpperCase()}
+                    {resource.size || resource.type?.toUpperCase()}
                   </span>
                 </div>
               </div>
