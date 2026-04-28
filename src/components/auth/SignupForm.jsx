@@ -7,9 +7,12 @@ import { useState }   from 'react'
 import Link           from 'next/link'
 import { useRouter }  from 'next/navigation'
 import { motion }     from 'framer-motion'
+import { AlertCircle } from 'lucide-react'
+import { useAuthContext } from '@/context/AuthContext'
+import { Spinner }        from '@/components/ui/Spinner'
 
 // ── Champ de saisie réutilisable ──────────────────
-function InputField({ id, label, type = 'text', placeholder, value, onChange }) {
+function InputField({ id, label, type = 'text', placeholder, value, onChange, error }) {
   const [focused, setFocused] = useState(false)
 
   return (
@@ -30,31 +33,55 @@ function InputField({ id, label, type = 'text', placeholder, value, onChange }) 
         placeholder={placeholder}
         autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'name'}
         required
-        className="w-full px-5 py-4 bg-[#eff4ff] rounded-xl text-sm text-[#121c2a]
+        className={`w-full px-5 py-4 bg-[#eff4ff] rounded-xl text-sm text-[#121c2a]
           placeholder:text-[#121c2a]/30 font-medium focus:outline-none border-none
-          transition-all duration-200"
+          transition-all duration-200 ${error ? 'border-red-500' : ''}`}
         style={{
           borderBottom: focused ? '2px solid #006e2f' : '2px solid transparent',
         }}
       />
+      {error && (
+        <div className="text-red-500 text-xs mt-1">
+          <AlertCircle className="inline-block mr-1" size={12} />
+          {error}
+        </div>
+      )}
     </div>
   )
 }
 
 export default function SignupForm() {
-  const router = useRouter()
+  const router          = useRouter()
+  const { register: apiRegister } = useAuthContext()
 
   // ── État du formulaire ─────────────────────────
-  const [name,     setName]     = useState('')
-  const [email,    setEmail]    = useState('')
-  const [password, setPassword] = useState('')
-  const [agreed,   setAgreed]   = useState(false)
+  const [firstName, setFirstName] = useState('')
+  const [lastName,  setLastName]  = useState('')
+  const [email,     setEmail]     = useState('')
+  const [password,  setPassword]  = useState('')
+  const [agreed,    setAgreed]    = useState(false)
+  const [loading,   setLoading]   = useState(false)
+  const [error,     setError]     = useState(null)
+  const [fieldErrors, setFieldErrors] = useState({})
 
   // ── Soumission ────────────────────────────────
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO : intégrer l'auth réelle (NextAuth / Supabase)
-    router.push('/login')
+    setError(null)
+    setFieldErrors({})
+    setLoading(true)
+    try {
+      await apiRegister({ first_name: firstName, last_name: lastName, email, password, password_confirmation: password })
+      router.push('/formations')
+    } catch (err) {
+      if (err.status === 422 && err.errors) {
+        setFieldErrors(err.errors)
+      } else {
+        setError(err.message || 'Une erreur est survenue')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -84,17 +111,41 @@ export default function SignupForm() {
         </p>
       </header>
 
+      {/* ── Message d'erreur global ── */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 font-medium mb-4"
+        >
+          <AlertCircle size={16} strokeWidth={2} className="shrink-0" />
+          {error}
+        </motion.div>
+      )}
+
       {/* ── Formulaire ── */}
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
 
-        <InputField
-          id="fullname"
-          label="Full name"
-          type="text"
-          placeholder="Enter your full name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <InputField
+            id="firstName"
+            label="First name"
+            type="text"
+            placeholder="Prénom"
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
+            error={fieldErrors.first_name?.[0]}
+          />
+          <InputField
+            id="lastName"
+            label="Last name"
+            type="text"
+            placeholder="Nom"
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
+            error={fieldErrors.last_name?.[0]}
+          />
+        </div>
 
         <InputField
           id="email"
@@ -103,6 +154,7 @@ export default function SignupForm() {
           placeholder="name@example.com"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          error={fieldErrors.email?.[0]}
         />
 
         <InputField
@@ -112,6 +164,7 @@ export default function SignupForm() {
           placeholder="••••••••"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          error={fieldErrors.password?.[0]}
         />
 
         {/* ── Checkbox CGU ── */}
@@ -143,16 +196,17 @@ export default function SignupForm() {
         {/* ── CTA ── */}
         <motion.button
           type="submit"
+          disabled={loading || !agreed}
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.97 }}
           transition={{ type: 'spring', stiffness: 300 }}
-          className="w-full py-4 rounded-2xl text-white font-bold text-lg transition-all duration-300"
+          className="w-full py-4 rounded-2xl text-white font-bold text-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           style={{
             background: 'linear-gradient(135deg, #006e2f, #22c55e)',
             boxShadow: '0 12px 32px rgba(0,110,47,0.25)',
           }}
         >
-          Create Account
+          {loading ? <><Spinner size="sm" /> Création...</> : 'Create Account'}
         </motion.button>
 
       </form>

@@ -6,15 +6,33 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Mail, ArrowRight, ArrowLeft, LockKeyhole } from "lucide-react";
+import { Mail, ArrowRight, ArrowLeft, LockKeyhole, AlertCircle } from "lucide-react";
+import { api } from "@/lib/api/client";
+import { Spinner } from "@/components/ui/Spinner";
 
 export default function ForgotPasswordForm() {
-  const [email, setEmail]         = useState("");
+  const [email,     setEmail]     = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading,   setLoading]   = useState(false);
+  const [error,     setError]     = useState(null);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (email) setSubmitted(true);
+    if (!email) return;
+    setError(null);
+    setLoading(true);
+    try {
+      await api.post('/forgot-password', { email });
+      setSubmitted(true);
+    } catch (err) {
+      if (err.status === 404) {
+        setSubmitted(true);
+      } else {
+        setError(err.message || 'Une erreur est survenue');
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -101,18 +119,25 @@ export default function ForgotPasswordForm() {
                 </div>
               </div>
 
+              {/* Erreur */}
+              {error && (
+                <div className="flex items-center gap-2 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 font-medium">
+                  <AlertCircle size={15} strokeWidth={2} className="shrink-0" />
+                  {error}
+                </div>
+              )}
+
               {/* Bouton submit */}
               <motion.button
                 type="submit"
+                disabled={loading}
                 whileHover={{ y: -2, boxShadow: "0 20px 48px rgba(0,110,47,0.28)" }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="w-full py-4 rounded-2xl font-semibold text-white text-sm flex items-center justify-center gap-2
-                           shadow-lg shadow-primary/20"
+                className="w-full py-4 rounded-2xl font-semibold text-white text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary/20 disabled:opacity-70 disabled:cursor-not-allowed"
                 style={{ background: "linear-gradient(135deg, #006e2f, #22c55e)" }}
               >
-                Send Reset Link
-                <ArrowRight size={17} aria-hidden="true" />
+                {loading ? <><Spinner size="sm" /> Envoi...</> : <>Send Reset Link <ArrowRight size={17} aria-hidden="true" /></>}
               </motion.button>
             </motion.form>
 

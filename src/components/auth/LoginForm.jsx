@@ -8,10 +8,13 @@ import Link                  from 'next/link'
 import Image                 from 'next/image'
 import { useRouter }         from 'next/navigation'
 import { motion }            from 'framer-motion'
-import { Mail, Lock, Eye, EyeOff, GraduationCap } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, GraduationCap, AlertCircle } from 'lucide-react'
+import { useAuthContext } from '@/context/AuthContext'
+import { Spinner }        from '@/components/ui/Spinner'
 
 export default function LoginForm() {
-  const router = useRouter()
+  const router      = useRouter()
+  const { login }   = useAuthContext()
 
   // ── État du formulaire ─────────────────────────
   const [activeTab,   setActiveTab]   = useState('login')
@@ -21,13 +24,22 @@ export default function LoginForm() {
   const [password,    setPassword]    = useState('')
   const [emailFocus,  setEmailFocus]  = useState(false)
   const [passFocus,   setPassFocus]   = useState(false)
+  const [loading,     setLoading]     = useState(false)
+  const [error,       setError]       = useState(null)
 
   // ── Soumission ────────────────────────────────
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO : intégrer l'auth réelle (NextAuth / Supabase)
-    // Les admins seront redirigés depuis le middleware selon leur rôle
-    router.push('/formations')
+    setError(null)
+    setLoading(true)
+    try {
+      await login(email, password)
+      router.push('/formations')
+    } catch (err) {
+      setError(err.message || 'Email ou mot de passe incorrect')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -90,6 +102,18 @@ export default function LoginForm() {
           </button>
         ))}
       </nav>
+
+      {/* ── Message d'erreur ── */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 font-medium mb-4"
+        >
+          <AlertCircle size={16} strokeWidth={2} className="shrink-0" />
+          {error}
+        </motion.div>
+      )}
 
       {/* ── Formulaire ── */}
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
@@ -214,13 +238,14 @@ export default function LoginForm() {
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.97 }}
           transition={{ type: 'spring', stiffness: 300 }}
-          className="w-full py-4 rounded-xl text-white font-bold text-base transition-all duration-300"
+          disabled={loading}
+          className="w-full py-4 rounded-xl text-white font-bold text-base transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           style={{
             background: 'linear-gradient(135deg, #006e2f, #22c55e)',
             boxShadow: '0 8px 24px rgba(0,110,47,0.25)',
           }}
         >
-          Sign In to Dashboard
+          {loading ? <><Spinner size="sm" /> Connexion...</> : 'Sign In'}
         </motion.button>
 
       </form>

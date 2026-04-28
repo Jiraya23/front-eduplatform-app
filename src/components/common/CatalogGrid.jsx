@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CatalogCourseCard } from './formation/CatalogCourseCard';
+import { CatalogCourseCard } from '../formation/CatalogCourseCard';
 
 export function CatalogGrid({ courses }) {
   const containerVariants = {
