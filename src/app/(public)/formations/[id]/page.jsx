@@ -51,35 +51,35 @@ function normalizeFormation(f) {
 export default function CourseDetailPage({ params }) {
   const { id }                         = use(params);
   const { formation, loading, error }  = useFormation(id);
-  const { isAuthenticated }            = useAuthContext();
+  const { isAuthenticated, loading: authLoading } = useAuthContext();
   const toast                          = useToast();
   const router                         = useRouter();
   const [enrolling, setEnrolling]      = useState(false);
-
-  const handleEnroll = async () => {
-    if (!isAuthenticated) {
-      router.push(`/login?redirect=/formations/${id}`);
-      return;
-    }
-    setEnrolling(true);
-    try {
-      await enroll(id);
-      toast.success('Inscription réussie !');
-      // Rediriger vers la 1ère leçon si disponible
-      const firstLesson = course?.firstLessonId;
-      if (firstLesson) router.push(`/lecons/${firstLesson}`);
-    } catch (err) {
-      toast.error(err.message || 'Erreur lors de l\'inscription');
-    } finally {
-      setEnrolling(false);
-    }
-  };
 
   if (loading) return <SpinnerPage />;
   if (error)   return <ErrorBlock message={error} />;
   if (!formation) return null;
 
   const course = normalizeFormation(formation);
+
+  const handleEnroll = async () => {
+    if (authLoading) await new Promise(r => setTimeout(r, 500));
+    if (!isAuthenticated) { router.push(`/login?redirect=/formations/${id}`); return; }
+    setEnrolling(true);
+    try {
+      await enroll(id);
+    } catch {
+      // Ignorer "déjà inscrit" — on redirige quand même
+    } finally {
+      setEnrolling(false);
+    }
+    const firstLesson = course.firstLessonId;
+    if (firstLesson) {
+      router.push(`/lecons/${firstLesson}`);
+    } else {
+      toast.error('Aucune leçon disponible pour cette formation.');
+    }
+  };
 
   return (
     <motion.main
@@ -92,7 +92,7 @@ export default function CourseDetailPage({ params }) {
       <CourseHero
         course={course}
         onEnroll={handleEnroll}
-        enrolling={enrolling}
+        enrolling={enrolling || authLoading}
         isAuthenticated={isAuthenticated}
       />
 

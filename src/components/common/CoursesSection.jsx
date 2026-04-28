@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { CatalogCourseCard } from '@/components/formation/CatalogCourseCard';
 import { Spinner } from '@/components/ui/Spinner';
-import { useFormations } from '@/hooks/useFormations';
+import { getFeatured } from '@/lib/api/formations';
+import { useState, useEffect } from 'react';
 
 function normalizeFormation(f) {
   return {
@@ -13,16 +14,28 @@ function normalizeFormation(f) {
     description: f.description ?? '',
     image:       f.image       ?? f.image_url   ?? 'https://placehold.co/400x250/eff4ff/006e2f?text=Formation',
     level:       f.niveau      ?? f.level       ?? '',
-    duration:    f.duree       ?? f.duration    ?? '',
+    duration:    f.duree_estimee ?? f.duree ?? f.duration ?? '',
     price:       f.prix != null ? (f.prix === 0 ? 'FREE' : `${f.prix} FCFA`) : 'FREE',
     badge:       f.badge       ?? (f.prix === 0 ? 'FREE' : 'PREMIUM'),
   };
 }
 
 export function CoursesSection() {
-  const { formations, loading } = useFormations({ per_page: 3 });
+  const [formations, setFormations] = useState([]);
+  const [loading,    setLoading]    = useState(true);
 
-  const courses = formations.slice(0, 3).map(normalizeFormation);
+  useEffect(() => {
+    getFeatured()
+      .then(data => {
+        // data est déjà le tableau (getFeatured retourne data.data)
+        const list = Array.isArray(data) ? data : (data?.data ?? []);
+        setFormations(list.slice(0, 3));
+      })
+      .catch(() => setFormations([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const courses = formations.map(normalizeFormation);
 
   const containerVariants = {
     hidden: {},

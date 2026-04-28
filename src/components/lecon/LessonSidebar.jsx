@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { FileText, FolderOpen } from 'lucide-react';
 
 // Sidebar sticky avec overview, resources et next lesson
 export default function LessonSidebar({ lesson }) {
@@ -33,7 +34,7 @@ export default function LessonSidebar({ lesson }) {
       >
         <div className="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none" />
         <div className="flex items-center gap-2 mb-6">
-          <span className="material-symbols-outlined text-[#006e2f]" style={{ fontVariationSettings: "'FILL' 1" }}>description</span>
+          <FileText size={20} className="text-[#006e2f]" />
           <h3 className="text-xl font-bold text-on-surface">Lesson Overview</h3>
         </div>
         <div className="space-y-4 text-on-surface/80 leading-relaxed text-[0.9375rem]">
@@ -41,7 +42,7 @@ export default function LessonSidebar({ lesson }) {
           <ul className="space-y-3 list-none p-0">
             {lesson.overviewObjectives?.map((point, idx) => (
               <li key={idx} className="flex gap-3">
-                <span className="material-symbols-outlined text-[#006e2f] text-sm mt-1">task_alt</span>
+                <span className="text-[#006e2f] mt-1">✓</span>
                 <span>{point}</span>
               </li>
             ))}
@@ -55,10 +56,11 @@ export default function LessonSidebar({ lesson }) {
         variants={itemVariants}
       >
         <h3 className="text-lg font-bold text-on-surface mb-6 flex items-center gap-2">
-          <span className="material-symbols-outlined text-secondary">folder_open</span>
+          <FolderOpen size={20} className="text-[#006e2f]" />
           Course Resources
         </h3>
         <div className="space-y-3">
+          {lesson.resources?.length === 0 && <p className="text-sm text-on-surface/50">Aucune ressource disponible.</p>}
           {lesson.resources?.map((resource, idx) => (
             <motion.a
               key={idx}
@@ -68,7 +70,7 @@ export default function LessonSidebar({ lesson }) {
               variants={itemVariants}
             >
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-tertiary">{resource.icon || 'picture_as_pdf'}</span>
+                <FileText size={18} className="text-[#006e2f]" />
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-on-surface">{resource.title}</span>
                   <span className="text-[0.7rem] text-on-surface/50">
@@ -76,7 +78,7 @@ export default function LessonSidebar({ lesson }) {
                   </span>
                 </div>
               </div>
-              <span className="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[#006e2f]">download</span>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[#006e2f] text-lg">↓</span>
             </motion.a>
           ))}
         </div>
@@ -101,7 +103,7 @@ export default function LessonSidebar({ lesson }) {
                 </p>
               </div>
               <div className="absolute top-0 right-0 h-full w-1/3 bg-[#006e2f]/20 blur-3xl rounded-full translate-x-10"></div>
-              <span className="material-symbols-outlined absolute bottom-6 right-6 group-hover:translate-x-2 transition-transform text-white">arrow_forward</span>
+              <span className="absolute bottom-6 right-6 group-hover:translate-x-2 transition-transform text-white text-xl">→</span>
             </motion.div>
           </Link>
         ) : (

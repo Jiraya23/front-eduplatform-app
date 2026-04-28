@@ -12,12 +12,17 @@ export function getToken() {
 }
 
 export function setToken(token) {
+  if (!token || token === 'undefined') return;
   localStorage.setItem(TOKEN_KEY, token);
+  // Stocker aussi dans un cookie pour que le middleware (serveur) puisse le lire
+  document.cookie = `${TOKEN_KEY}=${token}; path=/; max-age=${60 * 60 * 48}; SameSite=Lax`;
 }
 
 export function removeToken() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  // Supprimer aussi le cookie
+  document.cookie = `${TOKEN_KEY}=; path=/; max-age=0`;
 }
 
 export function getStoredUser() {

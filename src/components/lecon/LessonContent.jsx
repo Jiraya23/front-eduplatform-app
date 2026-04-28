@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Lightbulb, CheckCircle } from 'lucide-react';
 
 // Contenu détaillé de la leçon avec sections
 export default function LessonContent({ lesson }) {
@@ -24,7 +25,7 @@ export default function LessonContent({ lesson }) {
           <p>{lesson.content}</p>
 
           {/* Sections avec numérotation */}
-          <div className="flex flex-col md:flex-row gap-8 my-10">
+          {lesson.sections?.length > 0 && <div className="flex flex-col md:flex-row gap-8 my-10">
             {lesson.sections?.map((section, idx) => (
               <motion.div
                 key={idx}
@@ -43,15 +44,15 @@ export default function LessonContent({ lesson }) {
                 <p className="text-[0.9375rem]">{section.content}</p>
               </motion.div>
             ))}
-          </div>
+          </div>}
 
           {/* Key Principles */}
-          <div className="mt-12">
+          {lesson.keyPrinciples?.length > 0 && <div className="mt-12">
             <h4 className="font-bold text-on-surface text-lg border-b border-surface-variant pb-2 inline-block mb-6">
               Key Principles for Success:
             </h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
-              {lesson.keyPrinciples?.map((principle, idx) => (
+              {lesson.keyPrinciples.map((principle, idx) => (
                 <motion.li
                   key={idx}
                   className="flex items-start gap-3 p-4 rounded-2xl bg-surface-container-low"
@@ -60,9 +61,7 @@ export default function LessonContent({ lesson }) {
                   viewport={{ once: false, amount: 0.2 }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
                 >
-                  <span className="material-symbols-outlined text-primary mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    verified
-                  </span>
+                  <CheckCircle size={18} className="text-primary mt-0.5 shrink-0" />
                   <div>
                     <span className="font-bold block text-on-surface">{principle.title}</span>
                     <span className="text-sm text-on-surface/70">{principle.description}</span>
@@ -70,21 +69,21 @@ export default function LessonContent({ lesson }) {
                 </motion.li>
               ))}
             </ul>
-          </div>
+          </div>}
 
           {/* Key Takeaway */}
-          <div className="mt-12 bg-primary/5 border border-primary/20 p-8 rounded-3xl relative overflow-hidden">
+          {lesson.keyTakeaway && <div className="mt-12 bg-primary/5 border border-primary/20 p-8 rounded-3xl relative overflow-hidden">
             <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-4">
-                <span className="material-symbols-outlined text-primary">lightbulb</span>
+                <Lightbulb size={20} className="text-primary" />
                 <span className="font-bold text-primary tracking-wide uppercase text-sm">Key Takeaway</span>
               </div>
               <p className="text-on-surface font-medium text-lg italic leading-relaxed">
                 {lesson.keyTakeaway}
               </p>
             </div>
-          </div>
+          </div>}
         </div>
       </div>
     </motion.div>

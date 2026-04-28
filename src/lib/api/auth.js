@@ -11,8 +11,11 @@ import { setToken, removeToken, setStoredUser } from './token';
 export async function login(email, password) {
   const data = await api.post('/login', { email, password });
   setToken(data.data.token);
-  setStoredUser(data.data.user ?? null);
-  return data.data;
+  // Le backend ne retourne pas l'user dans /login — on le récupère via /me
+  const meData = await api.get('/me');
+  const user = meData.data ?? null;
+  setStoredUser(user);
+  return { token: data.data.token, user };
 }
 
 /**
@@ -20,9 +23,13 @@ export async function login(email, password) {
  */
 export async function register(payload) {
   const data = await api.post('/register', payload);
-  setToken(data.data.token);
-  setStoredUser(data.data.user ?? null);
-  return data.data;
+  // Le backend retourne l'user mais pas de token à l'inscription
+  // On enchaîne avec un login pour obtenir le token
+  const loginData = await api.post('/login', { email: payload.email, password: payload.password });
+  setToken(loginData.data.token);
+  const user = data.data ?? null;
+  setStoredUser(user);
+  return { token: loginData.data.token, user };
 }
 
 /**

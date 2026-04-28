@@ -25,8 +25,8 @@ function normalizeLecon(l) {
     overviewObjectives: l.objectifs ?? [],
     resources:  l.ressources  ?? l.resources  ?? [],
     // Navigation
-    prevId:   l.lecon_precedente?.id ?? l.prev_id ?? null,
-    nextId:   l.lecon_suivante?.id   ?? l.next_id ?? null,
+    prevId:   l.previous_lecon_id ?? l.lecon_precedente?.id ?? l.prev_id ?? null,
+    nextId:   l.next_lecon_id     ?? l.lecon_suivante?.id  ?? l.next_id ?? null,
     quizId:   l.quiz?.id             ?? l.quiz_id ?? null,
     // "Up next" teaser sidebar
     nextLesson: l.lecon_suivante
@@ -86,6 +86,7 @@ export default function LessonPage({ params }) {
             prevId={lesson.prevId}
             nextId={lesson.nextId}
             quizId={lesson.quizId}
+            leconId={lesson.id}
             onMarkComplete={handleMarkComplete}
             completing={completing}
             completed={lecon.completed ?? false}

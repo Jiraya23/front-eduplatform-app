@@ -42,11 +42,11 @@ export default function QuizDetailPage({ params }) {
   };
 
   const handleSubmit = async () => {
+    // Backend attend: { answers: { question_id: reponse_id, ... } }
     const payload = {
-      reponses: Object.entries(answers).map(([question_id, reponse_id]) => ({
-        question_id: Number(question_id),
-        reponse_id:  Number(reponse_id),
-      })),
+      answers: Object.fromEntries(
+        Object.entries(answers).map(([qId, rId]) => [Number(qId), Number(rId)])
+      ),
     };
     await submit(payload);
     setShowResult(true);
@@ -60,8 +60,9 @@ export default function QuizDetailPage({ params }) {
 
   // ── Écran de résultat ─────────────────────────────────────
   if (showResult && result) {
-    const score    = result.score ?? result.note ?? 0;
-    const passed   = result.reussi ?? result.passed ?? score >= 50;
+    const res      = result.resultat ?? result;
+    const score    = res.percentage ?? res.score ?? res.note ?? 0;
+    const passed   = res.reussi ?? res.passed ?? score >= 50;
     const leconId  = result.lecon_id ?? quiz.lecon_id ?? null;
 
     return (
@@ -93,6 +94,27 @@ export default function QuizDetailPage({ params }) {
               {score}%
             </p>
             <p className="text-sm text-on-surface/60 font-medium">Score final</p>
+          </div>
+
+          {/* Corrigé — bonnes réponses */}
+          <div className="text-left space-y-4 w-full">
+            <h2 className="text-lg font-bold text-on-surface">Corrigé</h2>
+            {(result.questions ?? quiz.questions)?.map((q, idx) => {
+              const bonneReponse = q.reponses?.find(r => r.est_correcte);
+              const userReponseId = answers[q.id];
+              const isCorrect = bonneReponse?.id === userReponseId;
+              return (
+                <div key={q.id} className={`rounded-2xl p-5 border ${isCorrect ? 'border-primary/30 bg-primary/5' : 'border-red-200 bg-red-50'}`}>
+                  <p className="font-semibold text-on-surface mb-2 text-sm">Q{idx + 1}. {q.texte}</p>
+                  <p className={`text-sm font-medium ${isCorrect ? 'text-primary' : 'text-red-500'}`}>
+                    {isCorrect ? '✓ Bonne réponse' : '✗ Mauvaise réponse'}
+                    {!isCorrect && bonneReponse && (
+                      <span className="text-on-surface/60 font-normal"> — Réponse correcte : <strong>{bonneReponse.texte}</strong></span>
+                    )}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -135,7 +157,7 @@ export default function QuizDetailPage({ params }) {
                 {quiz.titre ?? quiz.title ?? 'Quiz'}
               </span>
               <h1 className="mt-2 text-3xl font-bold tracking-tight text-on-surface md:text-4xl">
-                {current.enonce ?? current.question ?? current.text}
+                {current.texte ?? current.enonce ?? current.question ?? current.text}
               </h1>
             </div>
             <div className="text-right shrink-0">
@@ -188,7 +210,7 @@ export default function QuizDetailPage({ params }) {
                           {String.fromCharCode(65 + reponses.indexOf(rep))}
                         </span>
                         <span className={`font-medium ${isSelected ? 'text-on-surface' : 'text-on-surface/80'}`}>
-                          {rep.texte ?? rep.text ?? rep.contenu}
+                          {rep.texte ?? rep.text ?? rep.contenu ?? rep.label}
                         </span>
                         {isSelected && <CheckCircle2 className="ml-auto h-5 w-5 text-primary shrink-0" />}
                       </button>

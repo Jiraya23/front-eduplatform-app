@@ -49,12 +49,16 @@ export async function apiFetch(endpoint, options = {}) {
   if (!response.ok) {
     switch (response.status) {
       case 401:
-        // Token expiré ou invalide → déconnexion propre
-        removeToken();
-        if (typeof window !== 'undefined') {
-          window.dispatchEvent(new Event('auth:logout'));
+        // Émettre auth:logout uniquement si un token existait (session expirée)
+        // Si pas de token, c'est juste un visiteur non authentifié → ne pas rediriger
+        if (token) {
+          removeToken();
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('auth:logout'));
+          }
+          throw new ApiError('Session expirée. Veuillez vous reconnecter.', 401);
         }
-        throw new ApiError('Session expirée. Veuillez vous reconnecter.', 401);
+        throw new ApiError('Authentification requise.', 401);
 
       case 403:
         throw new ApiError('Accès refusé.', 403);

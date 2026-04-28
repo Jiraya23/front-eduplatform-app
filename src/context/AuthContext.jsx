@@ -50,6 +50,10 @@ export function AuthProvider({ children }) {
   // ── Écouter l'événement auth:logout (déclenché par client.js sur 401) ──
   useEffect(() => {
     const handleLogout = () => {
+      // Ne rediriger que si l'utilisateur était connecté (token expiré côté serveur)
+      const token = getToken();
+      if (!token) return;
+      removeToken();
       setUser(null);
       router.push('/login');
     };
