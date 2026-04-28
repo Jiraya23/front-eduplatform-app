@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { Spinner } from '@/components/ui/Spinner';
 
 // Boutons de navigation entre leçons
-export default function LessonNavigation({ prevId, nextId, quizId }) {
+export default function LessonNavigation({ prevId, nextId, quizId, onMarkComplete, completing, completed }) {
   return (
     <motion.div
       className="mt-8 flex flex-wrap items-center justify-between gap-4"
@@ -60,11 +61,17 @@ export default function LessonNavigation({ prevId, nextId, quizId }) {
         </motion.div>
       ) : (
         <motion.button
-          className="flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-container text-white font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all"
+          onClick={onMarkComplete}
+          disabled={completing || completed}
+          className="flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-container text-white font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
           whileHover={{ y: -2 }}
         >
-          <CheckCircle size={18} />
-          Marquer comme terminée
+          {completing
+            ? <><Spinner size="sm" /> En cours...</>
+            : completed
+              ? <><CheckCircle size={18} /> Terminée ✓</>
+              : <><CheckCircle size={18} /> Marquer comme terminée</>
+          }
         </motion.button>
       )}
     </motion.div>

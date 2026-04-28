@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Spinner } from '@/components/ui/Spinner';
 
-export function CourseDetailCTA() {
+export function CourseDetailCTA({ isAuthenticated, onEnroll, enrolling }) {
   return (
     <motion.section
       initial={{ opacity: 0, y: 24 }}
@@ -20,12 +21,19 @@ export function CourseDetailCTA() {
           Rejoignez une communauté de 5,000+ apprenants passionnés et boostez vos compétences dès aujourd'hui.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-          <Link href="/signup" className="bg-gradient-to-r from-[#006e2f] to-[#22c55e] text-white px-10 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-[#006e2f]/20 transition-all hover:-translate-y-1">
-            Commencer maintenant
-          </Link>
-          <button className="border-2 border-white/30 text-white px-10 py-4 rounded-xl font-bold hover:bg-white/10 transition-all">
-            Consulter le syllabus
+          <button
+            onClick={onEnroll}
+            disabled={enrolling}
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#006e2f] to-[#22c55e] text-white px-10 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-[#006e2f]/20 transition-all hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {enrolling
+              ? <><Spinner size="sm" /> Inscription...</>
+              : isAuthenticated ? 'Commencer maintenant' : "S'inscrire gratuitement"
+            }
           </button>
+          <Link href="/formations" className="border-2 border-white/30 text-white px-10 py-4 rounded-xl font-bold hover:bg-white/10 transition-all text-center">
+            Voir tout le catalogue
+          </Link>
         </div>
       </div>
     </motion.section>

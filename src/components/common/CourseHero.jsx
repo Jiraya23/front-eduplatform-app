@@ -4,8 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Star, Play } from 'lucide-react';
+import { Spinner } from '@/components/ui/Spinner';
 
-export function CourseHero({ course }) {
+export function CourseHero({ course, onEnroll, enrolling, isAuthenticated }) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -57,14 +58,18 @@ export function CourseHero({ course }) {
             </div>
           </div>
 
-          {/* Enroll Button — visiteur → /signup, connecté → /lecons/[firstLessonId] */}
+          {/* Bouton S'inscrire / Continuer */}
           <motion.div variants={itemVariants} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 300 }}>
-            <Link
-              href={course.firstLessonId ? `/lecons/${course.firstLessonId}` : '/signup'}
-              className="inline-block bg-gradient-to-r from-[#006e2f] to-[#22c55e] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-[#006e2f]/20 transition-all"
+            <button
+              onClick={onEnroll}
+              disabled={enrolling}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#006e2f] to-[#22c55e] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-[#006e2f]/20 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              S'inscrire à cette formation
-            </Link>
+              {enrolling
+                ? <><Spinner size="sm" /> Inscription...</>
+                : isAuthenticated ? 'Commencer la formation' : "S'inscrire à cette formation"
+              }
+            </button>
           </motion.div>
         </motion.div>
 
