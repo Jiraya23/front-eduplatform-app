@@ -43,10 +43,10 @@ export function ContactInfoCards() {
           <Mail strokeWidth={1.5} size={22} />
         </div>
         <h3 className="text-xl font-headline font-semibold mb-2 text-on-surface">
-          Email Support
+          Support par Email
         </h3>
         <p className="text-sm mb-4" style={{ color: '#3d4a3d' }}>
-          Response time: within 24 hours
+          Délai de réponse : sous 24 heures
         </p>
         <a
           href="mailto:support@eduplattform.com"
@@ -75,10 +75,10 @@ export function ContactInfoCards() {
           <Phone strokeWidth={1.5} size={22} />
         </div>
         <h3 className="text-xl font-headline font-semibold mb-2 text-on-surface">
-          Direct Hotline
+          Ligne Directe
         </h3>
         <p className="text-sm mb-4" style={{ color: '#3d4a3d' }}>
-          Mon - Fri, 8am to 6pm GMT+1
+          Lun - Ven, 8h à 18h GMT+1
         </p>
         <a
           href="tel:+237600000000"
@@ -99,10 +99,10 @@ export function ContactInfoCards() {
       >
         <div>
           <h3 className="text-xl font-headline font-semibold mb-2">
-            Campus Presence
+            Présence sur Campus
           </h3>
           <p className="text-sm" style={{ opacity: 0.8 }}>
-            Visit our main innovation hub in Douala.
+            Visitez notre principal hub d'innovation à Douala.
           </p>
         </div>
         <div className="flex items-center gap-2 mt-6 font-semibold text-sm">

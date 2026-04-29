@@ -33,7 +33,7 @@ export function CourseHero({ course, onEnroll, enrolling, isAuthenticated }) {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#006e2f]/10 text-[#006e2f] rounded-full text-xs font-bold uppercase tracking-wider">
             <span className="w-2 h-2 bg-[#006e2f] rounded-full"></span>
-            Advanced Specialization
+            Specialisation Avancée
           </div>
 
           {/* Title */}

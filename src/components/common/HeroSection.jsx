@@ -80,7 +80,7 @@ export function HeroSection() {
           </motion.div>
 
           {/* Social Proof */}
-          <motion.div
+         {/*  <motion.div
             variants={itemVariants}
             className="flex items-center gap-4 pt-6"
           >
@@ -95,7 +95,7 @@ export function HeroSection() {
             <p className="text-sm font-medium text-on-surface">
               <span className="font-bold">4.8/5</span> basé sur 2,500+ avis
             </p>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
 

@@ -25,7 +25,7 @@ export function CourseDescription({ course }) {
         {/* Left - Description */}
         <div className="lg:col-span-2 space-y-8">
           <motion.div variants={itemVariants}>
-            <h2 className="font-['Inter'] text-3xl font-bold text-[#121c2a] mb-6">Detailed Description</h2>
+            <h2 className="font-['Inter'] text-3xl font-bold text-[#121c2a] mb-6">Description Detaillée</h2>
             <p className="text-[#121c2a]/70 leading-relaxed mb-4">
               {course.detailedDescription}
             </p>

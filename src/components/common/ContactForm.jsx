@@ -9,7 +9,7 @@ export function ContactForm() {
   const [form, setForm] = useState({
     fullName: '',
     email: '',
-    subject: 'General Inquiry',
+    subject: 'Renseignement général',
     message: '',
   });
 
@@ -39,21 +39,21 @@ export function ContactForm() {
           <div className="space-y-2">
             <label className="block text-xs font-semibold uppercase tracking-wider ml-1"
               style={{ color: '#3d4a3d' }}>
-              Full Name
+              Nom complet
             </label>
             <input
               type="text"
               name="fullName"
               value={form.fullName}
               onChange={handleChange}
-              placeholder="John Doe"
+              placeholder="Jean Dupont"
               className={inputClass}
             />
           </div>
           <div className="space-y-2">
             <label className="block text-xs font-semibold uppercase tracking-wider ml-1"
               style={{ color: '#3d4a3d' }}>
-              Email Address
+              Adresse email
             </label>
             <input
               type="email"
@@ -70,7 +70,7 @@ export function ContactForm() {
         <div className="space-y-2">
           <label className="block text-xs font-semibold uppercase tracking-wider ml-1"
             style={{ color: '#3d4a3d' }}>
-            Subject
+            Sujet
           </label>
           <select
             name="subject"
@@ -78,10 +78,10 @@ export function ContactForm() {
             onChange={handleChange}
             className={`${inputClass} appearance-none`}
           >
-            <option>General Inquiry</option>
-            <option>Technical Support</option>
-            <option>Course Admissions</option>
-            <option>Business Partnerships</option>
+            <option>Renseignement général</option>
+            <option>Support technique</option>
+            <option>Inscriptions aux cours</option>
+            <option>Partenariats professionnels</option>
           </select>
         </div>
 
@@ -96,7 +96,7 @@ export function ContactForm() {
             value={form.message}
             onChange={handleChange}
             rows={5}
-            placeholder="How can we help you reach your goals?"
+            placeholder="Comment pouvons-nous vous aider à atteindre vos objectifs ?"
             className={inputClass}
           />
         </div>
@@ -113,7 +113,7 @@ export function ContactForm() {
               boxShadow: '0 20px 40px -8px rgba(0,110,47,0.25)',
             }}
           >
-            Send Message
+            Envoyer le message
             <Send
               strokeWidth={1.5}
               size={18}

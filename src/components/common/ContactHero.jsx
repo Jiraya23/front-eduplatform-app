@@ -19,9 +19,9 @@ export function ContactHero() {
           className="text-5xl md:text-7xl font-headline font-bold tracking-tight text-on-surface mb-6"
           style={{ letterSpacing: '-0.02em' }}
         >
-          {"Let's build the "}
-          <span className="text-primary">future of learning</span>
-          {' together.'}
+          {"Construisons l'"}
+          <span className="text-primary">avenir de l'apprentissage</span>
+          {' ensemble.'}
         </motion.h1>
 
         <motion.p
@@ -31,9 +31,9 @@ export function ContactHero() {
           className="text-lg text-on-surface-variant max-w-xl leading-relaxed"
           style={{ color: '#3d4a3d' }}
         >
-          Have questions about our courses or need technical support? Our team of
-          academic advisors is here to guide you through your elevated scholar
-          journey.
+          Vous avez des questions sur nos cours ou besoin d'un support technique ? Notre équipe de
+          conseillers pédagogiques est là pour vous accompagner tout au long de
+          votre parcours d'apprentissage.
         </motion.p>
       </div>
 

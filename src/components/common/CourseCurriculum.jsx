@@ -31,7 +31,7 @@ const containerVariants = {
       className="py-20 px-6 max-w-4xl mx-auto"
     >
       <motion.div variants={itemVariants} className="text-center mb-12">
-        <h2 className="font-['Inter'] text-3xl font-bold text-[#121c2a] mb-2">Course Curriculum</h2>
+        <h2 className="font-['Inter'] text-3xl font-bold text-[#121c2a] mb-2">Programme des Cours</h2>
         <p className="text-[#121c2a]/60">Explorez nos modules de formation en détail</p>
       </motion.div>
 
