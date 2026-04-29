@@ -188,7 +188,7 @@ export default function LessonSidebar({ lesson }) {
             onClick={closePdf}
           >
             <motion.div
-              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+              className="bg-white rounded-3xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -212,7 +212,7 @@ export default function LessonSidebar({ lesson }) {
                   </button>
                 </div>
               </div>
-              <div className="h-[70vh] flex items-center justify-center">
+              <div className="h-[82vh] flex items-center justify-center">
                 {pdfLoading && (
                   <div className="text-gray-500 text-sm">Chargement du PDF...</div>
                 )}
