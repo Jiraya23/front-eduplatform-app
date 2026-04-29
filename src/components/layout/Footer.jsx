@@ -74,10 +74,10 @@ export function Footer() {
         {/* Bottom */}
         <div className="pt-8 border-t border-surface-container-highest flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-sm font-medium text-on-surface">
-            © 2024 EduPlattform. Fièrement construit pour les leaders de demain.
+            © 2026 EduPlattform. Fièrement construit pour les leaders de demain.
           </p>
           <div className="flex items-center gap-8">
-            <span className="text-xs font-bold text-on-surface tracking-widest uppercase">Douala • Abidjan • Dakar • Paris</span>
+            <span className="text-xs font-bold text-on-surface tracking-widest uppercase">Douala • Logpom</span>
           </div>
         </div>
       </div>

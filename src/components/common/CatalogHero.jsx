@@ -27,14 +27,14 @@ export function CatalogHero() {
         variants={itemVariants}
         className="font-['Inter'] text-[3.5rem] font-bold tracking-tight text-[#121c2a] leading-none mb-6"
       >
-        Discover Your <span className="bg-gradient-to-r from-[#006e2f] to-[#785a00] bg-clip-text text-transparent">Future</span>.
+        Decouvrez votre <span className="bg-gradient-to-r from-[#006e2f] to-[#785a00] bg-clip-text text-transparent">Avenir</span>.
       </motion.h1>
 
       <motion.p
         variants={itemVariants}
         className="text-[#121c2a]/70 text-lg max-w-2xl mb-10"
       >
-        Access world-class curriculum designed for the next generation of Cameroonian leaders. Start your journey with our curated course catalog.
+       Accédez à un programme de classe mondiale conçu pour la prochaine génération de dirigeants camerounais. Commencez votre parcours avec notre catalogue de cours soigneusement sélectionné.
       </motion.p>
     </motion.header>
   );

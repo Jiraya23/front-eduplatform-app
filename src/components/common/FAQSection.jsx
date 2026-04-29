@@ -7,27 +7,27 @@ import { Plus, ArrowRight } from 'lucide-react';
 const faqs = [
   {
     id: 1,
-    question: 'How do I access my course materials?',
+    question: 'Comment accéder à mes supports de cours ?',
     answer:
-      "Once enrolled, all your materials are accessible via the 'Dashboard' link in your profile. You can download resources for offline viewing through our mobile app.",
+      "Une fois inscrit, tous vos supports sont accessibles via le lien 'Tableau de bord' dans votre profil. Vous pouvez télécharger les ressources pour une consultation hors ligne via notre application mobile.",
   },
   {
     id: 2,
-    question: 'Are the certificates globally recognized?',
+    question: 'Les certificats sont-ils reconnus à l\'international ?',
     answer:
-      'Our certifications are co-signed by leading industry partners and are designed to meet international standards for technical and soft-skill proficiency.',
+      'Nos certifications sont co-signées par des partenaires industriels de premier plan et sont conçues pour répondre aux normes internationales de compétences techniques et humaines.',
   },
   {
     id: 3,
-    question: 'Can I request a refund?',
+    question: 'Puis-je demander un remboursement ?',
     answer:
-      "We offer a 7-day 'No Questions Asked' refund policy if you haven't completed more than 20% of the course content.",
+      "Nous offrons une politique de remboursement de 7 jours sans conditions si vous n'avez pas complété plus de 20% du contenu du cours.",
   },
   {
     id: 4,
-    question: 'Do you offer corporate training?',
+    question: 'Proposez-vous des formations en entreprise ?',
     answer:
-      "Yes, we have specialized 'Team Growth' plans for organizations looking to upskill their employees at scale with custom learning paths.",
+      "Oui, nous avons des plans 'Croissance d'équipe' spécialisés pour les organisations souhaitant améliorer les compétences de leurs employés à grande échelle avec des parcours personnalisés.",
   },
 ];
 
@@ -59,10 +59,10 @@ export function FAQSection() {
             className="text-3xl md:text-4xl font-headline font-bold text-on-surface mb-4"
             style={{ letterSpacing: '-0.02em' }}
           >
-            Frequently Asked Questions
+            Questions Fréquemment Posées
           </h2>
           <p className="text-sm" style={{ color: '#3d4a3d' }}>
-            Quick answers to common questions about our platform and methodology.
+            Réponses rapides aux questions courantes sur notre plateforme et notre méthodologie.
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export function FAQSection() {
           transition={{ type: 'spring', stiffness: 300 }}
           className="flex items-center gap-2 text-primary font-bold text-sm hover:gap-3 transition-all"
         >
-          View Help Center
+          Voir le centre d'aide
           <ArrowRight strokeWidth={1.5} size={18} />
         </motion.button>
       </motion.div>

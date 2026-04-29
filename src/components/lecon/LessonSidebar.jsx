@@ -84,7 +84,7 @@ export default function LessonSidebar({ lesson }) {
         <div className="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none" />
         <div className="flex items-center gap-2 mb-6">
           <FileText size={20} className="text-[#006e2f]" />
-          <h3 className="text-xl font-bold text-on-surface">Lesson Overview</h3>
+          <h3 className="text-xl font-bold text-on-surface">Aperçu des leçons</h3>
         </div>
         <div className="space-y-4 text-on-surface/80 leading-relaxed text-[0.9375rem]">
           <p>{lesson.overview}</p>
@@ -106,7 +106,7 @@ export default function LessonSidebar({ lesson }) {
       >
         <h3 className="text-lg font-bold text-on-surface mb-6 flex items-center gap-2">
           <FolderOpen size={20} className="text-[#006e2f]" />
-          Course Resources
+          Ressources des cours
         </h3>
         <div className="space-y-3">
           {lesson.resources?.length === 0 && <p className="text-sm text-on-surface/50">Aucune ressource disponible.</p>}
