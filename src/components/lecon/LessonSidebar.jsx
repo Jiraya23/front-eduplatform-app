@@ -1,11 +1,59 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { FileText, FolderOpen } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FileText, FolderOpen, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 // Sidebar sticky avec overview, resources et next lesson
 export default function LessonSidebar({ lesson }) {
+  const [selectedPdf, setSelectedPdf] = useState(null);
+  const [pdfBlobUrl, setPdfBlobUrl]   = useState(null);
+  const [pdfLoading, setPdfLoading]   = useState(false);
+  const [pdfError, setPdfError]       = useState(null);
+  const blobUrlRef = useRef(null);
+
+  useEffect(() => {
+    if (!selectedPdf) {
+      if (blobUrlRef.current) {
+        URL.revokeObjectURL(blobUrlRef.current);
+        blobUrlRef.current = null;
+      }
+      setPdfBlobUrl(null);
+      setPdfError(null);
+      return;
+    }
+
+    let cancelled = false;
+    setPdfLoading(true);
+    setPdfError(null);
+    setPdfBlobUrl(null);
+
+    fetch(`/api/pdf?url=${encodeURIComponent(selectedPdf.url)}`)
+      .then(res => {
+        if (!res.ok) throw new Error(`Impossible de charger le PDF (${res.status})`);
+        return res.blob();
+      })
+      .then(blob => {
+        if (cancelled) return;
+        const objUrl = URL.createObjectURL(blob);
+        blobUrlRef.current = objUrl;
+        setPdfBlobUrl(objUrl);
+      })
+      .catch(err => {
+        if (!cancelled) setPdfError(err.message);
+      })
+      .finally(() => {
+        if (!cancelled) setPdfLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [selectedPdf]);
+
+  function closePdf() {
+    setSelectedPdf(null);
+  }
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -20,13 +68,14 @@ export default function LessonSidebar({ lesson }) {
   };
 
   return (
-    <motion.div
-      className="space-y-8 sticky top-28"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.2 }}
-    >
+    
+      <motion.div
+        className="space-y-8 sticky top-28"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+      >
       {/* Lesson Overview */}
       <motion.div
         className="bg-surface-container-lowest p-8 rounded-3xl shadow-[0_32px_64px_-12px_rgba(18,28,42,0.06)] relative overflow-hidden"
@@ -61,28 +110,31 @@ export default function LessonSidebar({ lesson }) {
         </h3>
         <div className="space-y-3">
           {lesson.resources?.length === 0 && <p className="text-sm text-on-surface/50">Aucune ressource disponible.</p>}
-          {lesson.resources?.map((resource, idx) => (
-            <motion.a
-              key={idx}
-              href={resource.url || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-white transition-colors group cursor-pointer"
-              whileHover={{ x: 4 }}
-              variants={itemVariants}
-            >
-              <div className="flex items-center gap-3">
-                <FileText size={18} className="text-[#006e2f]" />
-                <div className="flex flex-col">
-                  <span className="text-sm font-bold text-on-surface">{resource.title || resource.nom}</span>
-                  <span className="text-[0.7rem] text-on-surface/50">
-                    {resource.size || resource.type?.toUpperCase()}
-                  </span>
+          {lesson.resources?.map((resource, idx) => {
+            const isPdf = resource.type?.toUpperCase() === 'PDF' || resource.url?.toLowerCase().endsWith('.pdf');
+            return (
+              <motion.div
+                key={idx}
+                className="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-white transition-colors group cursor-pointer"
+                whileHover={{ x: 4 }}
+                variants={itemVariants}
+                onClick={() => isPdf ? setSelectedPdf(resource) : window.open(resource.url, '_blank')}
+              >
+                <div className="flex items-center gap-3">
+                  <FileText size={18} className="text-[#006e2f]" />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-on-surface">{resource.title || resource.nom}</span>
+                    <span className="text-[0.7rem] text-on-surface/50">
+                      {resource.size || resource.type?.toUpperCase()}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[#006e2f] text-lg">↓</span>
-            </motion.a>
-          ))}
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[#006e2f] text-lg">
+                  {isPdf ? '👁' : '↓'}
+                </span>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
 
@@ -124,6 +176,71 @@ export default function LessonSidebar({ lesson }) {
           </motion.div>
         )}
       </motion.div>
+
+      {/* PDF Viewer Modal */}
+      <AnimatePresence>
+        {selectedPdf && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closePdf}
+          >
+            <motion.div
+              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 className="text-lg font-bold text-gray-900">{selectedPdf.title || selectedPdf.nom}</h3>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={selectedPdf.url}
+                    download
+                    className="px-4 py-2 bg-[#006e2f] text-white rounded-lg hover:bg-[#005a26] transition-colors text-sm font-medium"
+                  >
+                    Télécharger
+                  </a>
+                  <button
+                    onClick={closePdf}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X size={20} className="text-gray-500" />
+                  </button>
+                </div>
+              </div>
+              <div className="h-[70vh] flex items-center justify-center">
+                {pdfLoading && (
+                  <div className="text-gray-500 text-sm">Chargement du PDF...</div>
+                )}
+                {pdfError && (
+                  <div className="text-center p-6">
+                    <p className="text-red-500 text-sm mb-4">{pdfError}</p>
+                    <a
+                      href={selectedPdf.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-[#006e2f] text-white rounded-lg hover:bg-[#005a26] transition-colors text-sm font-medium"
+                    >
+                      Ouvrir dans un nouvel onglet
+                    </a>
+                  </div>
+                )}
+                {pdfBlobUrl && !pdfError && (
+                  <iframe
+                    src={`${pdfBlobUrl}#toolbar=1&navpanes=0`}
+                    className="w-full h-full border-0"
+                    title={selectedPdf.title || selectedPdf.nom}
+                  />
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
