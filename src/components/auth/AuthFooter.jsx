@@ -24,9 +24,9 @@ export default function AuthFooter() {
         {/* ── Liens ── */}
         <nav className="flex gap-8" aria-label="Liens du pied de page">
           {[
-            { label: 'Help Center',     href: '/help' },
-            { label: 'Terms of Service', href: '/terms' },
-            { label: 'Privacy Policy',  href: '/privacy' },
+            { label: 'Centre d\'aide',     href: '/help' },
+            { label: 'Conditions d\'utilisation', href: '/terms' },
+            { label: 'Politique de confidentialité',  href: '/privacy' },
           ].map(link => (
             <Link
               key={link.href}
@@ -40,7 +40,7 @@ export default function AuthFooter() {
 
         {/* ── Copyright ── */}
         <p className="text-sm text-on-surface/50">
-          © 2024 EduPlattform. Built for the Elevated Scholar.
+          © 2026 EduPlattform. Construit pour les leaders de demain.
         </p>
 
       </div>

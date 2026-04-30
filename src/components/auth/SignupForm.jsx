@@ -98,16 +98,16 @@ export default function SignupForm() {
           className="inline-block py-1 px-3 rounded-full text-[10px] font-bold tracking-wider uppercase mb-4"
           style={{ background: '#ffdf9a', color: '#251a00' }}
         >
-          Start Your Journey
+          Commencez votre parcours
         </span>
         <h1
           className="text-4xl md:text-5xl font-extrabold text-[#121c2a] tracking-tight mb-4"
           style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '-0.02em' }}
         >
-          Create your account
+          Créez votre compte
         </h1>
         <p className="text-[#121c2a]/60 leading-relaxed text-sm">
-          Join a community of elevated scholars across the continent and unlock your potential.
+          Rejoignez une communauté d'apprenants à travers le continent et libérez votre potentiel.
         </p>
       </header>
 
@@ -129,7 +129,7 @@ export default function SignupForm() {
         <div className="grid grid-cols-2 gap-4">
           <InputField
             id="firstName"
-            label="First name"
+            label="Prénom"
             type="text"
             placeholder="Prénom"
             value={firstName}
@@ -138,7 +138,7 @@ export default function SignupForm() {
           />
           <InputField
             id="lastName"
-            label="Last name"
+            label="Nom"
             type="text"
             placeholder="Nom"
             value={lastName}
@@ -159,7 +159,7 @@ export default function SignupForm() {
 
         <InputField
           id="password"
-          label="Password"
+          label="Mot de passe"
           type="password"
           placeholder="••••••••"
           value={password}
@@ -181,13 +181,13 @@ export default function SignupForm() {
             htmlFor="agree"
             className="text-sm text-[#121c2a]/60 leading-tight cursor-pointer"
           >
-            I agree to the{' '}
+            J'accepte les{' '}
             <Link href="/terms" className="text-primary font-semibold hover:underline">
-              Terms of Service
+              Conditions d'utilisation
             </Link>
-            {' '}and{' '}
+            {' '}et la{' '}
             <Link href="/privacy" className="text-primary font-semibold hover:underline">
-              Privacy Policy
+              Politique de confidentialité
             </Link>
             .
           </label>
@@ -206,7 +206,7 @@ export default function SignupForm() {
             boxShadow: '0 12px 32px rgba(0,110,47,0.25)',
           }}
         >
-          {loading ? <><Spinner size="sm" /> Création...</> : 'Create Account'}
+          {loading ? <><Spinner size="sm" /> Création...</> : 'Créer mon compte'}
         </motion.button>
 
       </form>
@@ -216,12 +216,12 @@ export default function SignupForm() {
         style={{ borderTop: '1px solid #dee9fc' }}
       >
         <p className="text-[#121c2a]/60 text-sm">
-          Already have an account?{' '}
+          Vous avez déjà un compte ?{' '}
           <Link
             href="/login"
             className="text-primary font-bold hover:underline underline-offset-4 transition-colors"
           >
-            Log in
+            Se connecter
           </Link>
         </p>
       </div>

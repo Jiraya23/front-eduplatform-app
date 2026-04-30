@@ -47,7 +47,7 @@ export default function ForgotPasswordPage() {
       {/* ── Footer 1 ligne ───────────────────────────────────── */}
       <footer className="shrink-0 py-3 px-8 bg-slate-50/80 border-t border-slate-200/50 flex justify-between items-center">
         <p className="text-xs text-slate-400">
-          © 2024 EduPlattform. Built for The Elevated Scholar.
+          © 2026 EduPlattform. Built for The Elevated Scholar.
         </p>
         <nav className="flex gap-6" aria-label="Liens légaux">
           {footerLinks.map((label) => (

@@ -67,14 +67,14 @@ export default function AuthBranding() {
           className="text-5xl font-bold leading-tight mb-6 tracking-tight"
           style={{ fontFamily: 'Inter, sans-serif' }}
         >
-          Empowering the{' '}
+          Élever{' '}
           <br />
-          <span style={{ color: '#fdc425' }}>Elevated Scholar.</span>
+          <span style={{ color: '#fdc425' }}>l'apprenant africain.</span>
         </h2>
 
         <p className="text-white/80 text-lg max-w-md leading-relaxed font-medium">
-          Join Africa&apos;s most modern learning ecosystem. Access world-class courses,
-          expert mentors, and a community of high-achievers.
+          Rejoignez l'écosystème d'apprentissage le plus moderne d'Afrique. Accédez à des cours de classe mondiale,
+          des mentors experts et une communauté de passionnés.
         </p>
       </div>
 
@@ -111,7 +111,7 @@ export default function AuthBranding() {
             ))}
           </div>
           <p className="text-sm font-semibold text-white/90">
-            Join +5,000 scholars today
+            Rejoignez +5 000 apprenants aujourd'hui
           </p>
         </div>
       </div>
