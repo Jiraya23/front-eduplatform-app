@@ -74,11 +74,10 @@ export default function ForgotPasswordForm() {
             className="flex flex-col gap-2"
           >
             <h1 className="font-headline text-2xl font-bold tracking-tight text-on-surface">
-              Forgot Password?
+              Mot de passe oublié ?
             </h1>
             <p className="text-slate-500 leading-relaxed text-sm">
-              No worries, it happens. Enter the email address associated with
-              your account and we&apos;ll send you a recovery link.
+              Pas de panique. Saisissez l'adresse email associée à votre compte et nous vous enverrons un lien de récupération.
             </p>
           </motion.div>
 
@@ -97,7 +96,7 @@ export default function ForgotPasswordForm() {
                   htmlFor="email"
                   className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1"
                 >
-                  Email Address
+                  Adresse email
                 </label>
                 <div className="relative group">
                   <input
@@ -137,7 +136,7 @@ export default function ForgotPasswordForm() {
                 className="w-full py-4 rounded-2xl font-semibold text-white text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary/20 disabled:opacity-70 disabled:cursor-not-allowed"
                 style={{ background: "linear-gradient(135deg, #006e2f, #22c55e)" }}
               >
-                {loading ? <><Spinner size="sm" /> Envoi...</> : <>Send Reset Link <ArrowRight size={17} aria-hidden="true" /></>}
+                {loading ? <><Spinner size="sm" /> Envoi...</> : <>Envoyer le lien <ArrowRight size={17} aria-hidden="true" /></>}
               </motion.button>
             </motion.form>
 
@@ -156,9 +155,9 @@ export default function ForgotPasswordForm() {
               >
                 <Mail size={22} className="text-white" aria-hidden="true" />
               </div>
-              <p className="font-headline font-bold text-on-surface">Check your inbox!</p>
+              <p className="font-headline font-bold text-on-surface">Vérifiez votre boîte mail !</p>
               <p className="text-sm text-slate-500">
-                Recovery link sent to{" "}
+                Lien de récupération envoyé à{" "}
                 <span className="font-semibold text-primary">{email}</span>
               </p>
             </motion.div>
@@ -180,7 +179,7 @@ export default function ForgotPasswordForm() {
                 className="group-hover:-translate-x-1 transition-transform"
                 aria-hidden="true"
               />
-              Back to Sign In
+              Retour à la connexion
             </Link>
           </motion.div>
 
@@ -194,9 +193,9 @@ export default function ForgotPasswordForm() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.45 }}
       >
-        Having trouble?{" "}
+        Un problème ?{" "}
         <Link href="/contact" className="text-primary font-semibold hover:underline">
-          Contact our support oasis.
+          Contactez notre support.
         </Link>
       </motion.p>
 
