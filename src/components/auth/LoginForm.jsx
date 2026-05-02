@@ -67,10 +67,10 @@ export default function LoginForm() {
           className="text-3xl font-bold text-[#121c2a] mb-2"
           style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '-0.02em' }}
         >
-          Welcome Back
+          Bon retour
         </h1>
         <p className="text-[#121c2a]/60 font-medium text-sm">
-          Continue your journey of excellence.
+          Continuez votre parcours d'excellence.
         </p>
       </header>
 
@@ -80,8 +80,8 @@ export default function LoginForm() {
         aria-label="Choix entre connexion et inscription"
       >
         {[
-          { id: 'login',  label: 'Login',   href: '/login' },
-          { id: 'signup', label: 'Sign Up',  href: '/signup' },
+          { id: 'login',  label: 'Connexion',    href: '/login' },
+          { id: 'signup', label: 'Inscription', href: '/signup' },
         ].map(tab => (
           <button
             key={tab.id}
@@ -124,7 +124,7 @@ export default function LoginForm() {
             htmlFor="email"
             className="text-xs font-bold text-[#121c2a]/60 uppercase tracking-wider block"
           >
-            Email Address
+            Adresse email
           </label>
           <div
             className="relative flex items-center bg-[#f8f9ff] rounded-xl transition-all duration-200"
@@ -164,13 +164,13 @@ export default function LoginForm() {
               htmlFor="password"
               className="text-xs font-bold text-[#121c2a]/60 uppercase tracking-wider"
             >
-              Password
+              Mot de passe
             </label>
             <Link
               href="/forgot-password"
               className="text-xs font-bold text-primary hover:text-[#22c55e] transition-colors"
             >
-              Forgot?
+              Oublié ?
             </Link>
           </div>
           <div
@@ -228,7 +228,7 @@ export default function LoginForm() {
             htmlFor="remember"
             className="text-sm font-semibold text-[#121c2a]/60 cursor-pointer"
           >
-            Keep me signed in
+            Rester connecté
           </label>
         </div>
 
@@ -245,7 +245,7 @@ export default function LoginForm() {
             boxShadow: '0 8px 24px rgba(0,110,47,0.25)',
           }}
         >
-          {loading ? <><Spinner size="sm" /> Connexion...</> : 'Sign In'}
+          {loading ? <><Spinner size="sm" /> Connexion...</> : 'Se connecter'}
         </motion.button>
 
       </form>
@@ -254,7 +254,7 @@ export default function LoginForm() {
       <div className="mt-8 relative flex items-center">
         <div className="flex-grow border-t border-[#d9e3f6]" aria-hidden="true" />
         <span className="flex-shrink mx-4 text-xs font-bold text-on-surface/40 uppercase tracking-widest">
-          Or continue with
+          Ou continuer avec
         </span>
         <div className="flex-grow border-t border-[#d9e3f6]" aria-hidden="true" />
       </div>
@@ -291,12 +291,12 @@ export default function LoginForm() {
 
       {/* ── Lien inscription ── */}
       <p className="mt-10 text-center text-sm font-medium text-on-surface/60">
-        New to the platform?{' '}
+        Nouveau sur la plateforme ?{' '}
         <Link
           href="/signup"
           className="text-primary font-bold ml-1 hover:underline underline-offset-4 transition-colors"
         >
-          Create your free account
+          Créer votre compte gratuit
         </Link>
       </p>
 

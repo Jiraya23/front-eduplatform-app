@@ -52,8 +52,8 @@ export default function SignupVisual() {
           style={{ color: '#fdc425' }}
           aria-hidden="true"
         />
-        <p className="text-white font-bold text-xs uppercase tracking-tighter">Accredited</p>
-        <p className="text-white/60 text-[10px]">Global Standard</p>
+        <p className="text-white font-bold text-xs uppercase tracking-tighter">Accrédité</p>
+        <p className="text-white/60 text-[10px]">Norme internationale</p>
       </div>
 
       {/* ── Contenu bas : citation + auteur ── */}
@@ -69,7 +69,7 @@ export default function SignupVisual() {
             aria-hidden="true"
           />
           <span className="text-sm font-bold tracking-widest uppercase">
-            The Elevated Choice
+            Le choix d'excellence
           </span>
         </div>
 
@@ -78,7 +78,7 @@ export default function SignupVisual() {
           className="text-4xl font-bold leading-tight mb-6"
           style={{ fontFamily: 'Inter, sans-serif' }}
         >
-          "Education is the most powerful weapon which you can use to change the world."
+          "L'éducation est l'arme la plus puissante que vous puissiez utiliser pour changer le monde."
         </blockquote>
 
         {/* Auteur */}
@@ -97,7 +97,7 @@ export default function SignupVisual() {
           <div>
             <p className="font-bold text-white">Awa Nemlin</p>
             <p className="text-sm" style={{ color: '#6bff8f' }}>
-              Lead Instructor, Creative Design
+              Instructrice principale, Design Créatif
             </p>
           </div>
         </div>

@@ -4,7 +4,7 @@
 // ════════════════════════════════════════
 
 import { useState, useEffect, useCallback } from 'react';
-import { getQuizByLecon, submitQuiz } from '@/lib/api/quiz';
+import { getQuizByLecon, submitQuiz, getNextLecon } from '@/lib/api/quiz';
 
 export function useQuiz(leconId) {
   const [quiz,       setQuiz]       = useState(null);
@@ -12,6 +12,7 @@ export function useQuiz(leconId) {
   const [error,      setError]      = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [result,     setResult]     = useState(null);
+  const [nextLecon,  setNextLecon]  = useState(null);
 
   useEffect(() => {
     if (!leconId) return;
@@ -41,6 +42,16 @@ export function useQuiz(leconId) {
     try {
       const res = await submitQuiz(quiz.id, answers);
       setResult(res);
+      // Si réussi (>= score_minimal), charger la leçon suivante
+      const passed = res?.resultat?.passed ?? false;
+      if (passed && leconId) {
+        try {
+          const next = await getNextLecon(leconId);
+          setNextLecon(next);
+        } catch {
+          setNextLecon(null);
+        }
+      }
       return res;
     } catch (err) {
       setError(err.message);
@@ -48,7 +59,7 @@ export function useQuiz(leconId) {
     } finally {
       setSubmitting(false);
     }
-  }, [quiz?.id, submitting]);
+  }, [quiz?.id, submitting, leconId]);
 
-  return { quiz, loading, error, submit, submitting, result };
+  return { quiz, loading, error, submit, submitting, result, nextLecon };
 }

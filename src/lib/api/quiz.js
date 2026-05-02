@@ -22,3 +22,12 @@ export async function submitQuiz(quizId, answers) {
   const data = await api.post(`/quizzes/${quizId}/submit`, answers);
   return data.data;
 }
+
+/**
+ * Récupérer la leçon suivante après un quiz réussi
+ * @param {number|string} leconId
+ */
+export async function getNextLecon(leconId) {
+  const data = await api.get(`/lecons/${leconId}/next`);
+  return data.data;
+}
