@@ -8,7 +8,7 @@ export async function GET(request) {
     return NextResponse.json({ error: 'Paramètre url manquant' }, { status: 400 });
   }
 
-  try {
+  try { 
     const response = await fetch(fileUrl, {
       headers: { Accept: 'application/pdf,*/*' },
     });
